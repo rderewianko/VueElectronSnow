@@ -310,6 +310,7 @@ export default {
               this.updateExistingItam(data, info);
             } else {
               console.log("Clicked No");
+              // this.$destroy();
             }
           }
         });
@@ -408,6 +409,7 @@ export default {
           console.log("yes");
           this.checkIfItamExists(info);
         } else {
+          // this.$destroy();
           console.log("No");
         }
       }
