@@ -142,6 +142,9 @@
         >Create ITAM Record</button>
       </form>
       <notifications group="foo" />
+      <div v-if="showNotification">
+        <Notification :not-on-db="NotFoundOnDb" />
+      </div>
     </div>
   </div>
 </template>
@@ -165,6 +168,7 @@ const instance = axios.create({
     password: SNOW_PASS,
   },
 });
+import Notification from "@/components/Notification";
 
 export default {
   name: "Form",
@@ -181,6 +185,8 @@ export default {
       cards: [],
       mac: {},
       bitlockerOn: null,
+      showNotification: false,
+      NotFoundOnDb: [],
     };
   },
 
@@ -188,6 +194,7 @@ export default {
     this.getSystemInformation();
     this.getBitLockerVersion();
   },
+  components: { Notification },
 
   methods: {
     // Changes win32 to Windows  & darwin to OSX
@@ -258,24 +265,55 @@ export default {
         });
       });
     },
+    // Update Existing Itam
+    updateExistingItam: function (data, info) {
+      instance
+        .put(`cmdb_ci_computer/${data[0].sys_id}`, info)
+        .then((res) => {
+          console.log(res);
+          let result = res.data.result;
+          this.$notify({
+            group: "foo",
+            title: "Sucessfully Created ITAM Record ",
+            text: `Computer Name ${result.name}`,
+            type: "success",
+            duration: -2,
+          });
+          // Only after a successfull post , it'll make a second post with the network card
+          this.postNetworkAdapter(result);
+        })
+        .catch((err) => {
+          alert(JSON.stringify(err));
+        });
+    },
     // WORK IN PROGRESS - TO CHECK IF NAME EXISTS BEFORE POST
-    // checkIfItamExists: async function (info) {
-    //   alert(JSON.stringify(info));
-
-    //   console.log(info);
-    //   await instance
-    //     .get(
-    //       `cmdb_ci_computer?sysparm_query=name%3${encodeURIComponent(
-    //         info.name
-    //       )}&sysparm_limit=10`
-    //     )
-    //     .then((res) => {
-    //       let data = res.data.result;
-    //       data.map((x) => {
-    //         console.log(x);
-    //       });
-    //     });
-    // },
+    checkIfItamExists: async function (info) {
+      await instance
+        .get(
+          `cmdb_ci_computer?sysparm_query=GOTOname%3D${encodeURIComponent(
+            info.name
+          )}&sysparm_limit=1`
+        )
+        .then((res) => {
+          let data = res.data.result;
+          if (data.length == 0) {
+            // Means tag name dose not exist on snow
+            this.postToSnow(info);
+          } else {
+            // Prompt
+            let c = confirm(
+              `${info.name} Already exists, Would you like to update it ?`
+            );
+            // If prompt is yes
+            if (c == true) {
+              console.log("Clicked yes");
+              this.updateExistingItam(data, info);
+            } else {
+              console.log("Clicked No");
+            }
+          }
+        });
+    },
     // Post the object with the correct fields to create the itam record
     postToSnow: function (info) {
       instance
@@ -298,7 +336,6 @@ export default {
     },
     // This is what runs when the button is clicked, makes GET requests to different tables to get the ID
     getIdsFromTables: async function () {
-      let NotFoundOnDb = [];
       let info = {
         name: this.pcName,
         model_id: this.pcModel,
@@ -320,20 +357,10 @@ export default {
           )}&sysparm_limit=1`
         )
         .then((res) => {
-          // res.data.result.length != 0
-          //   ? (info.manufacturer = res.data.result[0].sys_id)
-          //   : this.$notify({
-          //       group: "foo",
-          //       title: `PC Manufacturer ${info.manufacturer} Not Found on Database `,
-          //       text: "Please Create Manually",
-          //       type: "warn",
-          //       closeOnClick: true,
-          //       duration: -2,
-          //     });
           if (res.data.result.length != 0) {
             info.manufacturer = res.data.result[0].sys_id;
           } else {
-            NotFoundOnDb.push("Manufacturer");
+            this.NotFoundOnDb.push("Manufacturer");
             this.$notify({
               group: "foo",
               title: `PC Manufacturer ${info.manufacturer} Not Found on Database `,
@@ -341,6 +368,7 @@ export default {
               type: "error",
               closeOnClick: true,
               duration: -2,
+              ignoreDuplicates: true,
             });
           }
         });
@@ -356,9 +384,10 @@ export default {
           if (res.data.result.length != 0) {
             id = res.data.result[0].sys_id;
             info.model_id = id;
-            this.postToSnow(info);
+            // this.postToSnow(info);
+            this.checkIfItamExists(info);
           } else {
-            NotFoundOnDb.push("Model");
+            this.NotFoundOnDb.push("Model");
             this.$notify({
               group: "foo",
               title: "PC Model  Not Found on Database ",
@@ -366,19 +395,22 @@ export default {
               type: "error",
               closeOnClick: true,
               duration: -2,
+              ignoreDuplicates: true,
             });
           }
         });
-      if (NotFoundOnDb.length > 0) {
-        if (confirm(` ${NotFoundOnDb.map((i) => i)} NOT FOUND. ADD ANYWAY?`)) {
-          this.postToSnow(info);
+      if (this.NotFoundOnDb.length > 0) {
+        this.showNotification = true;
+        let c = confirm(
+          ` ${this.NotFoundOnDb.map((i) => i)} NOT FOUND. ADD ANYWAY?`
+        );
+        if (c == true) {
+          console.log("yes");
+          this.checkIfItamExists(info);
         } else {
-          null;
+          console.log("No");
         }
-      } else {
       }
-
-      // this.checkIfItamExists(info);
     },
     // Get's Bitlocker Version
     getBitLockerVersion: function () {
