@@ -147,8 +147,6 @@
 </template>
 
 <script>
-console.log("assup");
-
 const si = require("systeminformation");
 const os = require("os");
 const axios = require("axios");
@@ -300,6 +298,7 @@ export default {
     },
     // This is what runs when the button is clicked, makes GET requests to different tables to get the ID
     getIdsFromTables: async function () {
+      let NotFoundOnDb = [];
       let info = {
         name: this.pcName,
         model_id: this.pcModel,
@@ -321,16 +320,29 @@ export default {
           )}&sysparm_limit=1`
         )
         .then((res) => {
-          res.data.result.length != 0
-            ? (info.manufacturer = res.data.result[0].sys_id)
-            : this.$notify({
-                group: "foo",
-                title: `PC Manufacturer ${info.manufacturer} Not Found on Database `,
-                text: "Please Create Manually",
-                type: "warn",
-                closeOnClick: true,
-                duration: -2,
-              });
+          // res.data.result.length != 0
+          //   ? (info.manufacturer = res.data.result[0].sys_id)
+          //   : this.$notify({
+          //       group: "foo",
+          //       title: `PC Manufacturer ${info.manufacturer} Not Found on Database `,
+          //       text: "Please Create Manually",
+          //       type: "warn",
+          //       closeOnClick: true,
+          //       duration: -2,
+          //     });
+          if (res.data.result.length != 0) {
+            info.manufacturer = res.data.result[0].sys_id;
+          } else {
+            NotFoundOnDb.push("Manufacturer");
+            this.$notify({
+              group: "foo",
+              title: `PC Manufacturer ${info.manufacturer} Not Found on Database `,
+              text: "Please Create Manually",
+              type: "error",
+              closeOnClick: true,
+              duration: -2,
+            });
+          }
         });
       // Gets MODEL ID,  nameLIKE , Name Contains
       await instance
@@ -341,27 +353,37 @@ export default {
         )
         .then((res) => {
           let id;
-          res.data.result.length != 0
-            ? (id = res.data.result[0].sys_id)
-            : ((id = null),
-              this.$notify({
-                group: "foo",
-                title: "PC Model  Not Found on Database ",
-                text: "Please Create Manually",
-                type: "warn",
-                closeOnClick: true,
-                duration: -2,
-              }));
-          info.model_id = id;
-          this.postToSnow(info);
-          console.log(info);
+          if (res.data.result.length != 0) {
+            id = res.data.result[0].sys_id;
+            info.model_id = id;
+            this.postToSnow(info);
+          } else {
+            NotFoundOnDb.push("Model");
+            this.$notify({
+              group: "foo",
+              title: "PC Model  Not Found on Database ",
+              text: "Please Create Manually",
+              type: "error",
+              closeOnClick: true,
+              duration: -2,
+            });
+          }
         });
+      if (NotFoundOnDb.length > 0) {
+        if (confirm(` ${NotFoundOnDb.map((i) => i)} NOT FOUND. ADD ANYWAY?`)) {
+          this.postToSnow(info);
+        } else {
+          null;
+        }
+      } else {
+      }
+
       // this.checkIfItamExists(info);
     },
     // Get's Bitlocker Version
     getBitLockerVersion: function () {
       shell
-        .exec(`manage-bde -status C:| findstr.exe /r /c:"Protection Status"`, {
+        .exec('manage-bde -status C:| findstr.exe /r /c:"Protection Status"', {
           async: true,
         })
         .stdout.on("data", function (data) {
