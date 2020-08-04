@@ -126,7 +126,6 @@
           <div class="form-group col-md-6">
             <label for="PcMacAddress">Mac Address</label>
             <select class="custom-select" v-model="mac">
-              <option selected :value="mac">{{ mac.iface }} | {{ mac.mac }} | {{ mac.ip4 }}</option>
               <option
                 v-for="item in cards"
                 :key="item.mac"
@@ -250,6 +249,7 @@ export default {
     // Posts Network Card after creating the Itam Record
     postNetworkAdapter: function (result) {
       let net = {
+        name: this.mac.ifaceName,
         ip_address: this.mac.ip4,
         mac_address: this.mac.mac,
         cmdb_ci: result.sys_id,
@@ -280,10 +280,10 @@ export default {
             duration: -2,
           });
           // Only after a successfull post , it'll make a second post with the network card
-          this.postNetworkAdapter(result);
+          this.checkIfNetworkCardExists(result);
         })
         .catch((err) => {
-          alert(JSON.stringify(err));
+          alert(err);
         });
     },
     // WORK IN PROGRESS - TO CHECK IF NAME EXISTS BEFORE POST
@@ -315,6 +315,25 @@ export default {
           }
         });
     },
+    checkIfNetworkCardExists: function (result) {
+      // cmdb_ci_network_adapter?sysparm_query= cmdb_ci %3D f5102cebdb56d010b0168e47489619a8 %5Emac_address %3D 28%3Ac6%3A3f%3Aad%3Abd%3Aa2 &sysparm_limit=1
+      console.log(this.mac.mac);
+      instance
+        .get(
+          `cmdb_ci_network_adapter?sysparm_query=cmdb_ci%3D${
+            result.sys_id
+          }%5Emac_address%3D${encodeURIComponent(this.mac.mac)}&sysparm_limit=1`
+        )
+        .then((res) => {
+          if (res.data.result.length > 0) {
+            alert(
+              `This mac ${res.data.result[0].mac_address} Already Exsist. Not adding it again`
+            );
+          } else {
+            this.postNetworkAdapter(result);
+          }
+        });
+    },
     // Post the object with the correct fields to create the itam record
     postToSnow: function (info) {
       instance
@@ -329,7 +348,7 @@ export default {
             duration: -2,
           });
           // Only after a successfull post , it'll make a second post with the network card
-          this.postNetworkAdapter(result);
+          this.checkIfNetworkCardExists(result);
         })
         .catch((err) => {
           alert(err);
@@ -344,7 +363,7 @@ export default {
         os_version: this.pcOSversion,
         os: this.pcOS,
         manufacturer: this.PcManufacturer,
-        connects_to_pci_device: this.ConnectsToPci,
+        u_connects_to_pci_device: this.ConnectsToPci,
         disk_encrypted_by: this.PcEncryption,
       };
       info.manufacturer == "HP"
