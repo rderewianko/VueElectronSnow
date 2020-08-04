@@ -343,7 +343,7 @@ export default {
         os_version: this.pcOSversion,
         os: this.pcOS,
         manufacturer: this.PcManufacturer,
-        connects_to_pci_device: this.ConnectsToPci,
+        u_connects_to_pci_device: this.ConnectsToPci,
         disk_encrypted_by: this.PcEncryption,
       };
       info.manufacturer == "HP"
