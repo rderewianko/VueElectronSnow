@@ -1,7 +1,7 @@
 <template>
   <div class="container h-100">
     <div class="row h-100 justify-content-center align-items-center">
-      <form class="col-12 jumbotron">
+      <form @submit.prevent="getIdsFromTables" class="col-12 jumbotron">
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="pcName">PC NAME</label>
@@ -13,10 +13,10 @@
               aria-describedby="pcNameHelp"
               required
             />
-            <small
-              id="pcNameHelp"
-              class="form-text text-muted"
-            >This is the hostname of this machine, - 2 on win, -3 on mac</small>
+            <small id="pcNameHelp" class="form-text text-muted"
+              >This is the hostname of this machine, - 2 on win, -3 on
+              mac</small
+            >
           </div>
           <div class="form-group col-md-6">
             <label for="pcSerialNumber">PC SERIAL</label>
@@ -28,10 +28,9 @@
               v-model="pcSerialNumber"
               required
             />
-            <small
-              id="pcSerialNumberHelp"
-              class="form-text text-muted"
-            >This is the Serial Number of this machine</small>
+            <small id="pcSerialNumberHelp" class="form-text text-muted"
+              >This is the Serial Number of this machine</small
+            >
           </div>
         </div>
         <div class="form-row">
@@ -45,7 +44,9 @@
               v-model="pcModel"
               required
             />
-            <small id="pcModelelp" class="form-text text-muted">This is the Model of this machine</small>
+            <small id="pcModelelp" class="form-text text-muted"
+              >This is the Model of this machine</small
+            >
           </div>
           <div class="form-group col-md-6">
             <label for="PcManufacturer">Manufacturer</label>
@@ -57,7 +58,9 @@
               v-model="PcManufacturer"
               required
             />
-            <small id="PcManufacturerHelp" class="form-text text-muted">This is the manufacturer</small>
+            <small id="PcManufacturerHelp" class="form-text text-muted"
+              >This is the manufacturer</small
+            >
           </div>
         </div>
         <div class="form-row">
@@ -71,7 +74,9 @@
               v-model="pcOSversion"
               required
             />
-            <small id="pcOSversionHelp" class="form-text text-muted">This is the Version of your os</small>
+            <small id="pcOSversionHelp" class="form-text text-muted"
+              >This is the Version of your os</small
+            >
           </div>
           <div class="form-group col-md-6">
             <label for="pcOS">Operating System</label>
@@ -83,7 +88,9 @@
               v-model="pcOS"
               required
             />
-            <small id="pcOSHelp" class="form-text text-muted">This is your Operating System</small>
+            <small id="pcOSHelp" class="form-text text-muted"
+              >This is your Operating System</small
+            >
           </div>
         </div>
         <div class="form-row">
@@ -96,13 +103,14 @@
                 v-model="ConnectsToPci"
                 value="connects_to_pci"
               />
-              <label class="custom-control-label" for="ConnectsToPci">PCI Network</label>
+              <label class="custom-control-label" for="ConnectsToPci"
+                >PCI Network</label
+              >
             </div>
 
-            <small
-              id="ConnectsToPciHelp"
-              class="form-text text-muted"
-            >Payment Card Industry Data Security Standard</small>
+            <small id="ConnectsToPciHelp" class="form-text text-muted"
+              >Payment Card Industry Data Security Standard</small
+            >
           </div>
         </div>
         <div class="form-row">
@@ -117,28 +125,34 @@
               v-model="PcEncryption"
               required
             />
-            <small
-              id="PcEncryptionHelp"
-              class="form-text text-muted"
-            >This is what it's Encrypted with</small>
+            <small id="PcEncryptionHelp" class="form-text text-muted"
+              >This is what it's Encrypted with</small
+            >
           </div>
           <!-- Mac Adress Select Field -->
           <div class="form-group col-md-6">
             <label for="PcMacAddress">Mac Address</label>
             <select class="custom-select" v-model="mac">
-              <option
-                v-for="item in cards"
-                :key="item.mac"
-                :value="item"
-              >{{ item.iface }} | {{ item.mac }} | {{ item.ip4 }}</option>
+              <option v-for="item in cards" :key="item.mac" :value="item"
+                >{{ item.iface }} | {{ item.mac }} | {{ item.ip4 }}</option
+              >
             </select>
           </div>
         </div>
-        <button
+        <!-- <button
           type="button"
           class="btn btn-primary"
           v-on:click="getIdsFromTables"
-        >Create ITAM Record</button>
+        >
+          Create ITAM Record
+        </button> -->
+        <button
+          type="submit"
+          class="btn btn-primary"
+          v-bind:disabled="emptyFields"
+        >
+          Create Itam Record
+        </button>
       </form>
       <notifications group="foo" />
       <div v-if="showNotification">
@@ -181,23 +195,41 @@ export default {
       pcOSversion: "",
       pcOS: "",
       ConnectsToPci: false,
-      cards: [],
       mac: {},
+      cards: [],
       bitlockerOn: null,
       showNotification: false,
       NotFoundOnDb: [],
+      formNotValid: false,
     };
   },
 
   created() {
     this.getSystemInformation();
-    this.getBitLockerVersion();
+    // this.getBitLockerVersion();
   },
   components: { Notification },
-
+  computed: {
+    emptyFields() {
+      if (
+        this.pcName == "" ||
+        this.pcSerialNumber == "" ||
+        this.model_id == "" ||
+        this.PcEncryption == "" ||
+        this.mac == "" ||
+        this.pcOS == "" ||
+        this.pcOSversion == "" ||
+        this.PcManufacturer == ""
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
   methods: {
     // Changes win32 to Windows  & darwin to OSX
-    osNameChanger: function (res) {
+    osNameChanger(res) {
       return res.platform == "win32"
         ? "Windows"
         : re.platform == "darwin"
@@ -205,7 +237,7 @@ export default {
         : res.platform;
     },
     // Removes the PC and MAC from the hostname
-    pcNameChanger: function (res) {
+    pcNameChanger(res) {
       return res.platform == "win32"
         ? res.hostname.substr(2)
         : res.platform == "darwin"
@@ -213,7 +245,7 @@ export default {
         : res.platform;
     },
     // Runs various methods from the systeminformation module
-    getSystemInformation: async function () {
+    async getSystemInformation() {
       await si
         .system()
         .then((res) => {
@@ -223,7 +255,7 @@ export default {
         })
         .catch((err) => {
           alert(err);
-          console.log(err);
+          console.log(`Si System ${err}`);
         });
       await si
         .osInfo()
@@ -234,7 +266,7 @@ export default {
         })
         .catch((err) => {
           alert(err);
-          console.log(err);
+          console.log(`Si onIfo ${err}`);
         });
       await si
         .networkInterfaces()
@@ -247,7 +279,7 @@ export default {
         });
     },
     // Posts Network Card after creating the Itam Record
-    postNetworkAdapter: function (result) {
+    postNetworkAdapter(result) {
       let net = {
         name: this.mac.ifaceName,
         ip_address: this.mac.ip4,
@@ -266,11 +298,10 @@ export default {
       });
     },
     // Update Existing Itam
-    updateExistingItam: function (data, info) {
+    updateExistingItam(data, info) {
       instance
         .put(`cmdb_ci_computer/${data[0].sys_id}`, info)
         .then((res) => {
-          console.log(res);
           let result = res.data.result;
           this.$notify({
             group: "foo",
@@ -287,7 +318,7 @@ export default {
         });
     },
     // WORK IN PROGRESS - TO CHECK IF NAME EXISTS BEFORE POST
-    checkIfItamExists: async function (info) {
+    async checkIfItamExists(info) {
       await instance
         .get(
           `cmdb_ci_computer?sysparm_query=GOTOname%3D${encodeURIComponent(
@@ -315,9 +346,9 @@ export default {
           }
         });
     },
-    checkIfNetworkCardExists: function (result) {
+    checkIfNetworkCardExists(result) {
       // cmdb_ci_network_adapter?sysparm_query= cmdb_ci %3D f5102cebdb56d010b0168e47489619a8 %5Emac_address %3D 28%3Ac6%3A3f%3Aad%3Abd%3Aa2 &sysparm_limit=1
-      console.log(this.mac.mac);
+
       instance
         .get(
           `cmdb_ci_network_adapter?sysparm_query=cmdb_ci%3D${
@@ -335,7 +366,7 @@ export default {
         });
     },
     // Post the object with the correct fields to create the itam record
-    postToSnow: function (info) {
+    postToSnow(info) {
       instance
         .post("cmdb_ci_computer", info)
         .then((res) => {
@@ -355,7 +386,7 @@ export default {
         });
     },
     // This is what runs when the button is clicked, makes GET requests to different tables to get the ID
-    getIdsFromTables: async function () {
+    async getIdsFromTables() {
       let info = {
         name: this.pcName,
         model_id: this.pcModel,
@@ -434,12 +465,12 @@ export default {
       }
     },
     // Get's Bitlocker Version
-    getBitLockerVersion: function () {
+    getBitLockerVersion() {
       shell
         .exec('manage-bde -status C:| findstr.exe /r /c:"Protection Status"', {
           async: true,
         })
-        .stdout.on("data", function (data) {
+        .stdout.on("data", function(data) {
           data.search("On") > 0 ? console.log(true) : console.log(false);
         });
     },
