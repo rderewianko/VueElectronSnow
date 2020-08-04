@@ -395,7 +395,7 @@ export default {
         os: this.pcOS,
         manufacturer: this.PcManufacturer,
         u_connects_to_pci_device: this.ConnectsToPci,
-        disk_encrypted_by: this.PcEncryption,
+        u_disk_encrypted_by: this.PcEncryption,
       };
       info.manufacturer == "HP"
         ? (info.manufacturer = "Hewlett-Packard")
