@@ -345,7 +345,9 @@ export default {
         .get(
           `cmdb_ci_network_adapter?sysparm_query=cmdb_ci%3D${
             result.sys_id
-          }%5Emac_address%3D${encodeURIComponent(this.mac.mac)}&sysparm_limit=1`
+          }%5Emac_address%3D${encodeURIComponent(
+            this.form.mac.mac
+          )}&sysparm_limit=1`
         )
         .then((res) => {
           if (res.data.result.length > 0) {
