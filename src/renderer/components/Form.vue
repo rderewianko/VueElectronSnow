@@ -148,7 +148,7 @@
       </form>
       <notifications group="foo" />
       <div v-if="showNotification">
-        <Notification :not-on-db="NotFoundOnDb" />
+        <!-- <Notification :not-on-db="NotFoundOnDb" /> -->
       </div>
     </div>
   </div>
@@ -174,7 +174,7 @@ const instance = axios.create({
     password: SNOW_PASS,
   },
 });
-import Notification from "@/components/Notification";
+// import Notification from "@/components/Notification";
 
 export default {
   name: "Form",
@@ -194,7 +194,6 @@ export default {
       cards: [],
       showNotification: false,
       NotFoundOnDb: [],
-      formNotValid: false,
     };
   },
 
@@ -452,6 +451,7 @@ export default {
         if (c == true) {
           console.log("yes");
           this.checkIfItamExists(info);
+          this.NotFoundOnDb = [];
         } else {
           // this.$destroy();
           console.log("No");
