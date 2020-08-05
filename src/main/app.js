@@ -11,3 +11,13 @@ ipcMain.on("bitlockerProtectionStatus", (event) => {
       event.returnValue = data;
     });
 });
+
+ipcMain.on("fileVaultStatus", (event) => {
+  shell
+    .exec("sudo fdesetup status", {
+      async: true,
+    })
+    .stdout.on("data", function(data) {
+      event.returnValue = data;
+    });
+});

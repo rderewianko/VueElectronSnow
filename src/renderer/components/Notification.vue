@@ -6,9 +6,9 @@
 
 <script>
 export default {
-  name: "Notification",
-  props: ["notOnDb"],
-};
+  name: 'Notification',
+  props: ['notOnDb']
+}
 </script>
 
 <style lang="scss" scoped></style>
