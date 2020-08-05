@@ -21,8 +21,8 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "my-project",
-    "appId": "com.example.yourapp",
+    "productName": "Automatic Itam Creator - AIC",
+    "appId": "com.castrosteven.aic",
     "directories": {
       "output": "build"
     },
@@ -48,7 +48,8 @@
       "icon": "build/icons/icon.icns"
     },
     "win": {
-      "icon": "build/icons/icon.ico"
+      "icon": "build/icons/icon.ico",
+      "requestedExecutionLevel": "requireAdministrator"
     },
     "linux": {
       "icon": "build/icons"
