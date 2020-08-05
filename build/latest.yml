@@ -1,8 +1,8 @@
 version: 0.0.1
 files:
-  - url: my-project-setup-0.0.1.exe
-    sha512: AXENalhfvfK+KqCN+z5gRXkBVuibu+ejj2sO+FbgHNBtyNemcEwANFvoCe5mNa0hY7Jybo3W3zIMcreA/2OdEQ==
-    size: 37259554
-path: my-project-setup-0.0.1.exe
-sha512: AXENalhfvfK+KqCN+z5gRXkBVuibu+ejj2sO+FbgHNBtyNemcEwANFvoCe5mNa0hY7Jybo3W3zIMcreA/2OdEQ==
-releaseDate: '2020-08-04T14:20:30.027Z'
+  - url: automatic-itam-creator-setup-0.0.1.exe
+    sha512: i1evdEoyNKSjxZPQbDxfjQQ2hyzIGC67YKrnAZvRNcBcGIhLPsfmGTx6ISl4YWPRho/QX3ZGNr+ID9xOmdMvbQ==
+    size: 37260148
+path: automatic-itam-creator-setup-0.0.1.exe
+sha512: i1evdEoyNKSjxZPQbDxfjQQ2hyzIGC67YKrnAZvRNcBcGIhLPsfmGTx6ISl4YWPRho/QX3ZGNr+ID9xOmdMvbQ==
+releaseDate: '2020-08-04T22:44:33.889Z'

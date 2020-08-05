@@ -6,77 +6,72 @@
           <div class="form-group col-md-6">
             <label for="pcName">PC NAME</label>
             <input
-              v-model="pcName"
+              v-model="form.pcName"
               type="test"
               class="form-control"
               id="pcName"
               aria-describedby="pcNameHelp"
               required
             />
-            <small id="pcNameHelp" class="form-text text-muted"
-              >This is the hostname of this machine, - 2 on win, -3 on
-              mac</small
-            >
+            <small id="pcNameHelp" class="form-text text-muted">
+              This is the hostname of this machine, - 2 on win, -3 on
+              mac
+            </small>
           </div>
           <div class="form-group col-md-6">
             <label for="pcSerialNumber">PC SERIAL</label>
             <input
-              type="test"
+              type="text"
               class="form-control"
               id="pcSerialNumber"
               aria-describedby="pcAssetTagHelp"
-              v-model="pcSerialNumber"
+              v-model="form.pcSerialNumber"
               required
             />
-            <small id="pcSerialNumberHelp" class="form-text text-muted"
-              >This is the Serial Number of this machine</small
-            >
+            <small
+              id="pcSerialNumberHelp"
+              class="form-text text-muted"
+            >This is the Serial Number of this machine</small>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="pcModel">Model</label>
             <input
-              type="test"
+              type="text"
               class="form-control"
               id="pcModel"
               aria-describedby="pcModelHelp"
-              v-model="pcModel"
+              v-model="form.pcModel"
               required
             />
-            <small id="pcModelelp" class="form-text text-muted"
-              >This is the Model of this machine</small
-            >
+            <small id="pcModelelp" class="form-text text-muted">This is the Model of this machine</small>
           </div>
           <div class="form-group col-md-6">
             <label for="PcManufacturer">Manufacturer</label>
             <input
-              type="test"
+              type="text"
               class="form-control"
               id="PcManufacturer"
               aria-describedby="PcManufacturerHelp"
-              v-model="PcManufacturer"
+              v-model="form.PcManufacturer"
               required
             />
-            <small id="PcManufacturerHelp" class="form-text text-muted"
-              >This is the manufacturer</small
-            >
+            <small id="PcManufacturerHelp" class="form-text text-muted">This is the manufacturer</small>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="pcOSversion">Os Version</label>
             <input
-              type="test"
+              type="text"
               class="form-control"
               id="pcOSversion"
               aria-describedby="pcOperatingSystemHelp"
-              v-model="pcOSversion"
+              v-model="form.pcOSversion"
               required
             />
-            <small id="pcOSversionHelp" class="form-text text-muted"
-              >This is the Version of your os</small
-            >
+            <small id="pcOSversionHelp" class="form-text text-muted">This is the Version of your os</small>
           </div>
           <div class="form-group col-md-6">
             <label for="pcOS">Operating System</label>
@@ -85,12 +80,10 @@
               class="form-control"
               id="pcOS"
               aria-describedby="pcOperatingSystemHelp"
-              v-model="pcOS"
+              v-model="form.pcOS"
               required
             />
-            <small id="pcOSHelp" class="form-text text-muted"
-              >This is your Operating System</small
-            >
+            <small id="pcOSHelp" class="form-text text-muted">This is your Operating System</small>
           </div>
         </div>
         <div class="form-row">
@@ -100,17 +93,16 @@
                 type="checkbox"
                 class="custom-control-input"
                 id="ConnectsToPci"
-                v-model="ConnectsToPci"
+                v-model="form.ConnectsToPci"
                 value="connects_to_pci"
               />
-              <label class="custom-control-label" for="ConnectsToPci"
-                >PCI Network</label
-              >
+              <label class="custom-control-label" for="ConnectsToPci">PCI Network</label>
             </div>
 
-            <small id="ConnectsToPciHelp" class="form-text text-muted"
-              >Payment Card Industry Data Security Standard</small
-            >
+            <small
+              id="ConnectsToPciHelp"
+              class="form-text text-muted"
+            >Payment Card Industry Data Security Standard</small>
           </div>
         </div>
         <div class="form-row">
@@ -118,41 +110,35 @@
           <div class="form-group col-md-6">
             <label for="PcEncryption">Encryption</label>
             <input
-              type="test"
+              type="text"
               class="form-control"
               id="PcEncryption"
               aria-describedby="PcEncryptionHelp"
-              v-model="PcEncryption"
+              v-model="form.PcEncryption"
               required
             />
-            <small id="PcEncryptionHelp" class="form-text text-muted"
-              >This is what it's Encrypted with</small
-            >
+            <small
+              id="PcEncryptionHelp"
+              class="form-text text-muted"
+            >This is what it's Encrypted with</small>
           </div>
           <!-- Mac Adress Select Field -->
           <div class="form-group col-md-6">
             <label for="PcMacAddress">Mac Address</label>
-            <select class="custom-select" v-model="mac">
-              <option v-for="item in cards" :key="item.mac" :value="item"
-                >{{ item.iface }} | {{ item.mac }} | {{ item.ip4 }}</option
-              >
+            <select class="custom-select" v-model="form.mac">
+              <option
+                v-for="item in cards"
+                :key="item.mac"
+                :value="item"
+              >{{ item.iface }} | {{ item.mac }} | {{ item.ip4 }}</option>
             </select>
           </div>
         </div>
-        <!-- <button
-          type="button"
-          class="btn btn-primary"
-          v-on:click="getIdsFromTables"
-        >
-          Create ITAM Record
-        </button> -->
         <button
           type="submit"
           class="btn btn-primary"
           v-bind:disabled="emptyFields"
-        >
-          Create Itam Record
-        </button>
+        >Create Itam Record</button>
       </form>
       <notifications group="foo" />
       <div v-if="showNotification">
@@ -164,9 +150,10 @@
 
 <script>
 const si = require("systeminformation");
-const os = require("os");
 const axios = require("axios");
 const shell = require("shelljs");
+const electron = require("electron");
+const { ipcRenderer } = require("electron");
 
 // SNOW CREDS
 const BASE_URL = "https://dev88577.service-now.com/api/now/table/";
@@ -187,17 +174,18 @@ export default {
   name: "Form",
   data() {
     return {
-      pcName: os.hostname(),
-      PcEncryption: "",
-      pcSerialNumber: "",
-      pcModel: "",
-      PcManufacturer: "",
-      pcOSversion: "",
-      pcOS: "",
-      ConnectsToPci: false,
-      mac: {},
+      form: {
+        pcName: "",
+        PcEncryption: "",
+        pcSerialNumber: "",
+        pcModel: "",
+        PcManufacturer: "",
+        pcOSversion: "",
+        pcOS: "",
+        ConnectsToPci: false,
+        mac: {},
+      },
       cards: [],
-      bitlockerOn: null,
       showNotification: false,
       NotFoundOnDb: [],
       formNotValid: false,
@@ -206,20 +194,19 @@ export default {
 
   created() {
     this.getSystemInformation();
-    // this.getBitLockerVersion();
   },
   components: { Notification },
   computed: {
     emptyFields() {
       if (
-        this.pcName == "" ||
-        this.pcSerialNumber == "" ||
-        this.model_id == "" ||
-        this.PcEncryption == "" ||
-        this.mac == "" ||
-        this.pcOS == "" ||
-        this.pcOSversion == "" ||
-        this.PcManufacturer == ""
+        this.form.pcName == "" ||
+        this.form.pcSerialNumber == "" ||
+        this.form.model_id == "" ||
+        this.form.PcEncryption == "" ||
+        this.form.mac == "" ||
+        this.form.pcOS == "" ||
+        this.form.pcOSversion == "" ||
+        this.form.PcManufacturer == ""
       ) {
         return true;
       } else {
@@ -249,9 +236,9 @@ export default {
       await si
         .system()
         .then((res) => {
-          this.pcSerialNumber = res.serial;
-          this.pcModel = res.model;
-          this.PcManufacturer = res.manufacturer;
+          this.form.pcSerialNumber = res.serial;
+          this.form.pcModel = res.model;
+          this.form.PcManufacturer = res.manufacturer;
         })
         .catch((err) => {
           alert(err);
@@ -260,9 +247,9 @@ export default {
       await si
         .osInfo()
         .then((res) => {
-          this.pcOSversion = `${res.distro} ${res.build}`;
-          this.pcOS = this.osNameChanger(res);
-          this.pcName = this.pcNameChanger(res);
+          this.form.pcOSversion = `${res.distro} ${res.build}`;
+          this.form.pcOS = this.osNameChanger(res);
+          this.form.pcName = this.pcNameChanger(res);
         })
         .catch((err) => {
           alert(err);
@@ -272,18 +259,19 @@ export default {
         .networkInterfaces()
         .then((res) => {
           this.cards = res;
-          this.mac = res[0];
+          this.form.mac = res[0];
         })
         .catch((err) => {
           console.log(err);
         });
+      this.getEncryption();
     },
     // Posts Network Card after creating the Itam Record
     postNetworkAdapter(result) {
       let net = {
-        name: this.mac.ifaceName,
-        ip_address: this.mac.ip4,
-        mac_address: this.mac.mac,
+        name: this.form.mac.ifaceName,
+        ip_address: this.form.mac.ip4,
+        mac_address: this.form.mac.mac,
         cmdb_ci: result.sys_id,
       };
       instance.post("cmdb_ci_network_adapter", net).then((res) => {
@@ -347,8 +335,6 @@ export default {
         });
     },
     checkIfNetworkCardExists(result) {
-      // cmdb_ci_network_adapter?sysparm_query= cmdb_ci %3D f5102cebdb56d010b0168e47489619a8 %5Emac_address %3D 28%3Ac6%3A3f%3Aad%3Abd%3Aa2 &sysparm_limit=1
-
       instance
         .get(
           `cmdb_ci_network_adapter?sysparm_query=cmdb_ci%3D${
@@ -388,14 +374,14 @@ export default {
     // This is what runs when the button is clicked, makes GET requests to different tables to get the ID
     async getIdsFromTables() {
       let info = {
-        name: this.pcName,
-        model_id: this.pcModel,
-        serial_number: this.pcSerialNumber,
-        os_version: this.pcOSversion,
-        os: this.pcOS,
-        manufacturer: this.PcManufacturer,
-        u_connects_to_pci_device: this.ConnectsToPci,
-        u_disk_encrypted_by: this.PcEncryption,
+        name: this.form.pcName,
+        model_id: this.form.pcModel,
+        serial_number: this.form.pcSerialNumber,
+        os_version: this.form.pcOSversion,
+        os: this.form.pcOS,
+        manufacturer: this.form.PcManufacturer,
+        u_connects_to_pci_device: this.form.ConnectsToPci,
+        u_disk_encrypted_by: this.form.PcEncryption,
       };
       info.manufacturer == "HP"
         ? (info.manufacturer = "Hewlett-Packard")
@@ -466,13 +452,24 @@ export default {
     },
     // Get's Bitlocker Version
     getBitLockerVersion() {
-      shell
-        .exec('manage-bde -status C:| findstr.exe /r /c:"Protection Status"', {
-          async: true,
-        })
-        .stdout.on("data", function(data) {
-          data.search("On") > 0 ? console.log(true) : console.log(false);
-        });
+      let protectionStatus = ipcRenderer.sendSync("bitlockerProtectionStatus");
+      protectionStatus.includes("Off")
+        ? (this.form.PcEncryption = "Not Encrypted")
+        : (this.form.PcEncryption = "");
+    },
+    // Get's encryption depending on platform
+    getEncryption() {
+      // 'linux', 'darwin', 'win32'
+      si.osInfo().then((res) => {
+        if (res.platform == "win32") {
+          this.getBitLockerVersion();
+        } else if (res.platform == "darwin") {
+          console.log("osx");
+          //  Need to add the get filevault
+        } else if (res.platform == "linux") {
+          console.log("linux");
+        }
+      });
     },
   },
 };
