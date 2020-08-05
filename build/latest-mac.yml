@@ -1,0 +1,12 @@
+version: 0.0.1
+files:
+  - url: automatic-itam-creator-0.0.1-mac.zip
+    sha512: YSSef8fmIobpBsWRnN6j46MITzjJ6DdV7ZVsCQKCXEDDtUIqqDvDnEQGV8SAS6Jlajt8wj6Pqju+zx9kyOz32g==
+    size: 48344747
+    blockMapSize: 51901
+  - url: automatic-itam-creator-0.0.1.dmg
+    sha512: HV2P1lQEvKEu/Y/i72GXvQTPRRrYtHp2yE2muM02/YoLiymkDKnSoyC3QXEz8ZRqIZePL3a1/BO3YEzd9pk/yw==
+    size: 50307200
+path: automatic-itam-creator-0.0.1-mac.zip
+sha512: YSSef8fmIobpBsWRnN6j46MITzjJ6DdV7ZVsCQKCXEDDtUIqqDvDnEQGV8SAS6Jlajt8wj6Pqju+zx9kyOz32g==
+releaseDate: '2020-08-05T19:00:47.034Z'

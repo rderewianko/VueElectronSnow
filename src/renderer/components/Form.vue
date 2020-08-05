@@ -475,13 +475,12 @@ export default {
         
         let status = ipcRenderer.sendSync("fileVaultStatus");
         console.log(status)
-        status.includes("On") ? (this.form.PcEncryption = 'FileVault') : this.form.PcEncryption = ""
+        status.includes("On") ? (this.form.PcEncryption = 'FileVault') : this.form.PcEncryption = "Not Encrypted"
       },
     // Get's encryption depending on platform
     getEncryption() {
       // 'linux', 'darwin', 'win32'
       si.osInfo().then((res) => {
-        
         if (res.platform === "win32") {
           this.getBitLockerVersion();
         } else if (res.platform === "darwin") {
