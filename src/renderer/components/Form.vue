@@ -13,9 +13,10 @@
               aria-describedby="pcNameHelp"
               required
             />
-            <small id="pcNameHelp" class="form-text text-muted">
-              This is the hostname of this machine, - 2 on win, -3 on mac
-            </small>
+            <small
+              id="pcNameHelp"
+              class="form-text text-muted"
+            >This is the hostname of this machine, - 2 on win, -3 on mac</small>
           </div>
           <div class="form-group col-md-6">
             <label for="pcSerialNumber">Serial Number</label>
@@ -27,9 +28,10 @@
               v-model="form.pcSerialNumber"
               required
             />
-            <small id="pcSerialNumberHelp" class="form-text text-muted"
-              >This is the Serial Number of this machine</small
-            >
+            <small
+              id="pcSerialNumberHelp"
+              class="form-text text-muted"
+            >This is the Serial Number of this machine</small>
           </div>
         </div>
         <div class="form-row">
@@ -43,9 +45,7 @@
               v-model="form.pcModel"
               required
             />
-            <small id="pcModelelp" class="form-text text-muted"
-              >This is the Model of this machine</small
-            >
+            <small id="pcModelelp" class="form-text text-muted">This is the Model of this machine</small>
           </div>
           <div class="form-group col-md-6">
             <label for="PcManufacturer">Manufacturer</label>
@@ -57,9 +57,7 @@
               v-model="form.PcManufacturer"
               required
             />
-            <small id="PcManufacturerHelp" class="form-text text-muted"
-              >This is the manufacturer</small
-            >
+            <small id="PcManufacturerHelp" class="form-text text-muted">This is the manufacturer</small>
           </div>
         </div>
         <div class="form-row">
@@ -73,9 +71,7 @@
               v-model="form.pcOSversion"
               required
             />
-            <small id="pcOSversionHelp" class="form-text text-muted"
-              >This is the Version of your os</small
-            >
+            <small id="pcOSversionHelp" class="form-text text-muted">This is the Version of your os</small>
           </div>
           <div class="form-group col-md-6">
             <label for="pcOS">Operating System</label>
@@ -87,9 +83,7 @@
               v-model="form.pcOS"
               required
             />
-            <small id="pcOSHelp" class="form-text text-muted"
-              >This is your Operating System</small
-            >
+            <small id="pcOSHelp" class="form-text text-muted">This is your Operating System</small>
           </div>
         </div>
         <div class="form-row">
@@ -102,14 +96,13 @@
                 v-model="form.ConnectsToPci"
                 value="connects_to_pci"
               />
-              <label class="custom-control-label" for="ConnectsToPci"
-                >PCI Network</label
-              >
+              <label class="custom-control-label" for="ConnectsToPci">PCI Network</label>
             </div>
 
-            <small id="ConnectsToPciHelp" class="form-text text-muted"
-              >Payment Card Industry Data Security Standard</small
-            >
+            <small
+              id="ConnectsToPciHelp"
+              class="form-text text-muted"
+            >Payment Card Industry Data Security Standard</small>
           </div>
         </div>
         <div class="form-row">
@@ -124,17 +117,20 @@
               v-model="form.PcEncryption"
               required
             />
-            <small id="PcEncryptionHelp" class="form-text text-muted"
-              >This is what it's Encrypted with</small
-            >
+            <small
+              id="PcEncryptionHelp"
+              class="form-text text-muted"
+            >This is what it's Encrypted with</small>
           </div>
           <!-- Mac Adress Select Field -->
           <div class="form-group col-md-6">
             <label for="PcMacAddress">Mac Address</label>
             <select class="custom-select" v-model="form.mac">
-              <option v-for="item in cards" :key="item.mac" :value="item"
-                >{{ item.iface }} | {{ item.mac }} | {{ item.ip4 }}</option
-              >
+              <option
+                v-for="item in cards"
+                :key="item.mac"
+                :value="item"
+              >{{ item.iface }} | {{ item.mac }} | {{ item.ip4 }}</option>
             </select>
           </div>
         </div>
@@ -142,9 +138,7 @@
           type="submit"
           class="btn btn-primary"
           v-bind:disabled="emptyFields"
-        >
-          Create Itam Record
-        </button>
+        >Create Itam Record</button>
       </form>
       <notifications group="foo" />
       <div v-if="showNotification">
@@ -460,9 +454,12 @@ export default {
     },
     // Get's Bitlocker Version
     getBitLockerVersion() {
+      let options = ["BitLocker", "FileVault", "Not Encrypted"];
       let protectionStatus = ipcRenderer.sendSync("bitlockerProtectionStatus");
       protectionStatus.includes("Off")
-        ? (this.form.PcEncryption = "Not Encrypted")
+        ? (this.form.PcEncryption = options[2])
+        : protectionStatus.includes("On")
+        ? (this.form.PcEncryption = options[0])
         : (this.form.PcEncryption = "");
     },
     // Get's encryption depending on platform
