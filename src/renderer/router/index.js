@@ -1,19 +1,25 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import LandingPage from '@/views/LandingPage'
+import Vue from "vue";
+import Router from "vue-router";
+import FormPage from "@/views/FormPage";
+import RitmCaputurer from "@/views/RitmCapturer";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'landing-page',
-      component: LandingPage
+      path: "/itam",
+      name: "form-page",
+      component: FormPage,
     },
     {
-      path: '*',
-      redirect: '/'
-    }
-  ]
-})
+      path: "/",
+      name: "ritm-capturer",
+      component: RitmCaputurer,
+    },
+    {
+      path: "*",
+      redirect: "/",
+    },
+  ],
+});

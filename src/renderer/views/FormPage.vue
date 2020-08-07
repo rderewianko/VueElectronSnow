@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <div class="h-100">
     <Form />
   </div>
 </template>
 
 <script>
-import Form from '@/components/Form.vue'
+import Form from "@/components/Form.vue";
 
 export default {
-  name: 'LandingPage',
+  name: "FormPage",
   components: {
-    Form
-  }
-}
+    Form,
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>
