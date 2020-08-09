@@ -1,12 +1,12 @@
 <template>
   <div>
-    <nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb fixed">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item" :class="active= true">
-          <router-link :to="{name:'ritm-capturer'}">Select Ritm</router-link>
+        <li class="breadcrumb-item" :class="(active = true)">
+          <router-link :to="{ name: 'ritm-capturer' }">Select Ritm</router-link>
         </li>
         <li class="breadcrumb-item">
-          <router-link :to="{name:'form-page'}">Fill Form</router-link>
+          <router-link :to="{ name: 'form-page' }">Fill Form</router-link>
         </li>
       </ol>
     </nav>
@@ -16,8 +16,11 @@
 
 <script>
 export default {
-  name: "my-project",
-};
+  name: 'my-project',
+  data () {
+    return {}
+  }
+}
 </script>
 
 <style>

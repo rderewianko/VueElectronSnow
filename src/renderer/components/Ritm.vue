@@ -12,8 +12,8 @@
 
 <script>
 export default {
-  name: "Ritm",
-};
+  name: 'Ritm'
+}
 </script>
 
 <style lang="scss" scoped>

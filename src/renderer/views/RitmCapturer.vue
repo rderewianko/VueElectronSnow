@@ -1,8 +1,13 @@
 <template>
   <div class="container h-100 justify-content-center align-items-center">
+    <h2 style="text-align:center;">Select A Computer Connection Request</h2>
     <div class="row">
       <div class="col-8">
-        <input type="text" placeholder="Enter REQ or RITM" class="form-control" />
+        <input
+          type="text"
+          placeholder="Enter REQ or RITM"
+          class="form-control"
+        />
       </div>
       <div class="col-4">
         <button class="btn btn-outline-success" type="submit">Search</button>
@@ -15,19 +20,18 @@
 </template>
 
 <script>
-import Ritm from "@/components/Ritm";
+import Ritm from '@/components/Ritm'
 export default {
-  name: "RitmCaputurer",
+  name: 'RitmCaputurer',
   components: {
-    Ritm,
+    Ritm
   },
   computed: {
-    getRitms() {
-      return 5;
-    },
-  },
-};
+    getRitms () {
+      return 5
+    }
+  }
+}
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
