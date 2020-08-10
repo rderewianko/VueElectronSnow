@@ -1,17 +1,22 @@
 <template>
   <div v-if="this.$msal.isAuthenticated()">
-    <nav aria-label="breadcrumb fixed">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item" :class="(active = true)">
-          <router-link :to="{ name: 'ritm-capturer' }">Select Ritm</router-link>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="breadcrumb fixed">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" :class="(active = true)">
+          <router-link
+            class="nav-link"
+            :class="{'active':true}"
+            exact
+            :to="{ name: 'ritm-capturer' }"
+          >Select Ritm</router-link>
         </li>
-        <li class="breadcrumb-item">
-          <router-link :to="{ name: 'form-page' }">Fill Form</router-link>
+        <li class="nav-item">
+          <router-link class="nav-link" :to="{ name: 'form-page' }">Fill Form</router-link>
         </li>
-        <span v-if="user">
-          <button class="btn btn-small btn-danger" @click="$msal.signOut()">Log Out {{name}}</button>
-        </span>
-      </ol>
+      </ul>
+      <span v-if="user">
+        <button class="btn btn-small btn-danger" @click="$msal.signOut()">Log Out {{name}}</button>
+      </span>
     </nav>
     <router-view></router-view>
   </div>
