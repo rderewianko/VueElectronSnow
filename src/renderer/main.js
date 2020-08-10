@@ -24,11 +24,6 @@ Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
-  created() {
-    if (!this.$msal.isAuthenticated()) {
-      this.$msal.signIn();
-    }
-  },
   components: { App },
   router,
   store,
