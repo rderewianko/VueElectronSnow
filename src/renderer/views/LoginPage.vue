@@ -42,10 +42,8 @@ export default {
       login: {
       }
     }
-  },
-  
+  }
 
-  
 }
 </script>
 

@@ -16,18 +16,18 @@
 </template>
 
 <script>
-import Ritm from "@/components/Ritm";
+import Ritm from '@/components/Ritm'
 export default {
-  name: "RitmCaputurer",
+  name: 'RitmCaputurer',
   components: {
-    Ritm,
+    Ritm
   },
   computed: {
-    getRitms() {
-      return 5;
-    },
-  },
-};
+    getRitms () {
+      return 5
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped></style>

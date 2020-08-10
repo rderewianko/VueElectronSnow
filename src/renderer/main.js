@@ -15,13 +15,15 @@ Vue.use(msal, {
   auth: {
     clientId: "4b20b21c-de80-4dc0-ac83-e1e895041f04",
     redirectUri: "http://localhost:9080/",
-    postLogoutRedirectUri: "http://localhost:9080/bye",
+    postLogoutRedirectUri: "http://localhost:9080/",
     requireAuthOnInitialize: true,
   },
 });
 
 if (!process.env.IS_WEB) Vue.use(require("vue-electron"));
+
 Vue.http = Vue.prototype.$http = axios;
+
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

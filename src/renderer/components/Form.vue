@@ -224,8 +224,8 @@ export default {
     },
     // Removes the PC and MAC from the hostname
     pcNameChanger(res) {
-      let mac = res.hostname.includes("MAC");
-      let pc = res.hostname.includes("PC");
+      let mac = res.hostname.includes("mac");
+      let pc = res.hostname.includes("pc");
       return pc // If true
         ? res.hostname.substr(2) // take 2
         : mac // else if this is true

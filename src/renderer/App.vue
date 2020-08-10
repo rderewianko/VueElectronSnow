@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.$msal.isAuthenticated()">
+  <div v-if="this.$msal.isAuthenticated()==true">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="breadcrumb fixed">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" :class="(active = true)">
@@ -14,28 +14,34 @@
           <router-link class="nav-link" :to="{ name: 'form-page' }">Fill Form</router-link>
         </li>
       </ul>
-      <span v-if="user">
-        <button class="btn btn-small btn-danger" @click="$msal.signOut()">Log Out {{name}}</button>
-      </span>
+      <button
+        class="btn btn-primary"
+        v-if="this.$msal.isAuthenticated() != true"
+        @click="this.$msal.signIn()"
+      >Login</button>
+      <div v-else>
+        <span>{{user.profile.name}}</span>
+        <button class="btn btn-danger" @click="signOff()">Logoff</button>
+      </div>
     </nav>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+// import aad from "./services/aad";
 export default {
   name: "my-project",
   data() {
     return {
-      name: "",
+      username: "",
     };
   },
   created() {
+    console.log(this.$msal.isAuthenticated());
     if (!this.$msal.isAuthenticated()) {
       this.$msal.signIn();
     }
-    let u = this.$msal.data.user.name;
-    this.name = u;
   },
   computed: {
     user() {
@@ -52,6 +58,11 @@ export default {
       }
       console.log(user);
       return user;
+    },
+  },
+  methods: {
+    signOff() {
+      this.$msal.signOut();
     },
   },
 };
