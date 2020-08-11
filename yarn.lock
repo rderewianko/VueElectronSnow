@@ -25,6 +25,20 @@
     promise-polyfill "^8.1.3"
     unfetch "^4.1.0"
 
+"@azure/msal-browser@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@azure/msal-browser/-/msal-browser-2.0.1.tgz#ee7bf4d544b959791e61f1585365fd9e142f0e74"
+  integrity sha512-UfrGMThUMdbdYBKU9YP00U6qHvxXE3Hq9hKxTgDmhumtpfHxoNDPjqk48hqX1Q/Wd0MYo/Eo4yTAFVt7w45RuA==
+  dependencies:
+    "@azure/msal-common" "^1.1.0"
+
+"@azure/msal-common@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@azure/msal-common/-/msal-common-1.1.0.tgz#6ff32dc7be9b722d56b4d448dbce7cdc4cb2315d"
+  integrity sha512-nPIHUxVNDDKhCKKkDvhh4lxR1nLdJ0tVk1I0UTGkU1IVyUK4854a+npB7h8E+Qj43UsXFcmXobILvceLLpIk5g==
+  dependencies:
+    debug "^4.1.1"
+
 "@babel/code-frame@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-beta.44.tgz#2a02643368de80916162be70865c97774f3adbd9"

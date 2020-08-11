@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.$msal.isAuthenticated()==true">
+  <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="breadcrumb fixed">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" :class="(active = true)">
@@ -14,14 +14,12 @@
           <router-link class="nav-link" :to="{ name: 'form-page' }">Fill Form</router-link>
         </li>
       </ul>
-      <button
-        class="btn btn-primary"
-        v-if="this.$msal.isAuthenticated() != true"
-        @click="this.$msal.signIn()"
-      >Login</button>
-      <div v-else>
-        <span>{{user.profile.name}}</span>
-        <button class="btn btn-danger" @click="signOff()">Logoff</button>
+      <button class="btn btn-primary" @click="this.$msal.signIn()">Login</button>
+      <div>
+        <button class="btn btn-danger" @click="logOff">
+          Logoff
+          <span>{{user.name}}</span>
+        </button>
       </div>
     </nav>
     <router-view></router-view>
@@ -29,39 +27,38 @@
 </template>
 
 <script>
-// import aad from "./services/aad";
+import { msalMixin } from "vue-msal";
 export default {
-  name: "my-project",
+  name: "app",
   data() {
-    return {
-      username: "",
-    };
+    return {};
   },
   created() {
-    console.log(this.$msal.isAuthenticated());
     if (!this.$msal.isAuthenticated()) {
-      this.$msal.signIn();
+      this.$msal.signIn().then((res) => {
+        console.log(res);
+      });
     }
   },
+  mixins: [msalMixin],
   computed: {
     user() {
       let user = null;
-      if (this.$msal.isAuthenticated) {
+      if (this.msal.isAuthenticated) {
         // Note that the dollar sign ($) is missing from this.msal
         user = {
-          ...this.$msal.user,
+          ...this.msal.user,
           profile: {},
         };
-        if (this.$msal.graph && this.$msal.graph.profile) {
-          user.profile = this.$msal.graph.profile;
+        if (this.msal.graph && this.msal.graph.profile) {
+          user.profile = this.msal.graph.profile;
         }
       }
-      console.log(user);
       return user;
     },
   },
   methods: {
-    signOff() {
+    logOff() {
       this.$msal.signOut();
     },
   },
