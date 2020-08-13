@@ -24,9 +24,9 @@ export default new Router({
       name: "log-out",
       component: LogOut,
     },
-    // {
-    //   path: "*",
-    //   redirect: "/",
-    // },
+    {
+      path: "/*",
+      redirect: "/",
+    },
   ],
 });

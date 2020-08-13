@@ -12,8 +12,11 @@
 
 <script>
 export default {
-  name: 'Ritm'
-}
+  name: "Ritm",
+  data() {
+    return {};
+  },
+};
 </script>
 
 <style lang="scss" scoped>

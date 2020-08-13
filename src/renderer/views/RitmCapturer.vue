@@ -16,18 +16,25 @@
 </template>
 
 <script>
-import Ritm from '@/components/Ritm'
+const Axios = require("axios");
+import Ritm from "@/components/Ritm";
 export default {
-  name: 'RitmCaputurer',
+  name: "RitmCaputurer",
   components: {
-    Ritm
+    Ritm,
   },
   computed: {
-    getRitms () {
-      return 5
-    }
-  }
-}
+    getRitms() {
+      // Axios.get(
+      //   "https://dev81248.service-now.com/api/now/table/sc_req_item?sysparm_limit=1"
+      // );
+      return 5;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>
+
+
+// https://dev81248.service-now.com/sc_req_item_list.do?sysparm_query=request.requested_for%3Djavascript%3Ags.getUserID()%5Eactive%3Dtrue&sysparm_view=ess

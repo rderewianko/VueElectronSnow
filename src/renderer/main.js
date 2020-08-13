@@ -7,18 +7,7 @@ import store from "./store";
 
 import Notifications from "vue-notification";
 
-import msal from "vue-msal";
-
 Vue.use(Notifications);
-
-Vue.use(msal, {
-  auth: {
-    clientId: "4b20b21c-de80-4dc0-ac83-e1e895041f04",
-    redirectUri: "http://localhost:9080/",
-    postLogoutRedirectUri: "http://localhost:9080/",
-    requireAuthOnInitialize: true,
-  },
-});
 
 if (!process.env.IS_WEB) Vue.use(require("vue-electron"));
 
@@ -33,3 +22,5 @@ new Vue({
   store,
   template: "<App/>",
 }).$mount("#app");
+
+console.log(window.location);

@@ -1,0 +1,10 @@
+{
+  "tenant": "<yourtenant>.sharepoint.com",
+  "tenantID": "17fc0598-4f7a-45d8-9b9d-fcb43b243bdc",
+  "ClientID": "4b20b21c-de80-4dc0-ac83-e1e895041f04",
+  "resource": "https://graph.microsoft.com",
+  "redirectURL": "https://login.microsoftonline.com/common/oauth2/nativeclient",
+  "listID": "<SharePoint List ID>",
+  "snow_client_id": "874ff1c140aa5010ff75c900db72823f",
+  "snow_redirect": "https://dev81248.servicenow.com/oauth_auth.do"
+}
