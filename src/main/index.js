@@ -53,10 +53,11 @@ app.on("activate", () => {
   }
 });
 
+// https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-implicit-grant-flow
 ipcMain.on("loginPrompt", (event, args) => {
   let authWindow = new BrowserWindow({
     alwaysOnTop: true, // keeps this window on top of others
-    modal: true,
+    modal: false,
     autoHideMenuBar: true,
     parent: mainWindow,
     frame: true,
@@ -106,10 +107,10 @@ ipcMain.on("loginPrompt", (event, args) => {
   });
 });
 
-ipcMain.on("snowPrompt", (event, args) => {
+ipcMain.on("logOut", (event, args) => {
   let authWindow = new BrowserWindow({
     alwaysOnTop: true, // keeps this window on top of others
-    modal: true,
+    modal: false,
     autoHideMenuBar: true,
     parent: mainWindow,
     frame: true,
@@ -133,28 +134,14 @@ ipcMain.on("snowPrompt", (event, args) => {
   });
 
   authWindow.loadURL(
-    `https://dev81248.service-now.com/oauth_auth.do?response_type=code&redirect_uri=` +
-      settings.snow_redirect +
-      `/oauth2/authorize?
-    client_id=` +
-      settings.snow_client_id +
-      `
-    &response_type=token
-    &scope=openid
-    &redirect_uri=` +
-      settings.redirectURL +
-      `
-    &response_mode=fragment
-    &nonce=678911
-    &state=12345
-    &resource=` +
-      encodeURIComponent(settings.resource)
+    `https://login.microsoftonline.com/` +
+      settings.tenantID +
+      `/oauth2/v2.0/logout?post_logout_redirect_uri=` +
+      settings.redirectURL
   );
 
   session.defaultSession.webRequest.onCompleted(filter, (details) => {
-    var url = details.url;
-    let accessToken = url.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
-    event.returnValue = accessToken;
+    event.returnValue = details;
     authWindow.close();
   });
 });

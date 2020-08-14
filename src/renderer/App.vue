@@ -1,24 +1,32 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="breadcrumb fixed">
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-dark"
+      aria-label="breadcrumb fixed"
+    >
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" :class="(active = true)">
           <router-link
             class="nav-link"
-            :class="{'active':true}"
+            :class="{ active: true }"
             exact
             :to="{ name: 'ritm-capturer' }"
-          >Select Ritm</router-link>
+            >Select Ritm</router-link
+          >
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" :to="{ name: 'form-page' }">Fill Form</router-link>
+          <router-link class="nav-link" :to="{ name: 'form-page' }"
+            >Fill Form</router-link
+          >
         </li>
       </ul>
-      <button class="btn btn-primary" @click="login">Login</button>
+
       <div>
-        <button class="btn btn-danger" @click="logOff()">
+        <button v-if="authenticated" class="btn btn-danger" @click="logOff()">
           Logoff
-          <span>{{user.name}}</span>
+        </button>
+        <button v-else class="btn btn-primary" @click="login()">
+          Login
         </button>
       </div>
     </nav>
@@ -27,27 +35,39 @@
 </template>
 
 <script>
-// const { ipcRenderer } = require("electron");
+const { ipcRenderer } = require("electron");
 import { mapState, mapActions } from "vuex";
 
 export default {
   name: "app",
   data() {
     return {
-      user: {
-        name: "yerr",
-      },
+      authenticated: false,
       accessToken: null,
     };
   },
   created() {
-    // let accessToken = ipcRenderer.sendSync("loginPrompt", {});
-    // if (accessToken !== undefined) {
-    //   this.accessToken = accessToken;
-    // }
+    let accessToken = ipcRenderer.sendSync("loginPrompt", {});
+    if (accessToken !== undefined) {
+      this.accessToken = accessToken;
+      this.authenticated = true;
+    }
   },
-  computed: mapState(["auth"]),
-  methods: mapActions(["login"]),
+  methods: {
+    logOff() {
+      let off = ipcRenderer.sendSync("logOut", {});
+      if (off !== undefined) {
+        this.authenticated = false;
+      }
+    },
+    logIn() {
+      let accessToken = ipcRenderer.sendSync("loginPrompt", {});
+      if (accessToken !== undefined) {
+        this.accessToken = accessToken;
+        this.authenticated = true;
+      }
+    },
+  },
 };
 </script>
 
