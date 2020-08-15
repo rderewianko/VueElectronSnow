@@ -152,22 +152,22 @@
 const si = require("systeminformation");
 const electron = require("electron");
 const { ipcRenderer } = require("electron");
+const axios = require("axios");
 
-// // SNOW CREDS
-// const BASE_URL = "https://dev81248.service-now.com/api/now/table/";
-// const SNOW_USER = "Stevec";
-// const SNOW_PASS = "Console.L0g";
+// SNOW CREDS
+const BASE_URL = "https://dev81248.service-now.com/api/now/table/";
+const SNOW_USER = "Stevec";
+const SNOW_PASS = "Console.L0g";
 
-// // Axios Configuration
-// const instance = axios.create({
-//   baseURL: BASE_URL,
-//   auth: {
-//     username: SNOW_USER,
-//     password: SNOW_PASS,
-//   },
-// });
-// import Notification from "@/components/Notification";
-const { instance } = require("../snow_auth.js");
+// Axios Configuration
+const instance = axios.create({
+  baseURL: BASE_URL,
+  auth: {
+    username: SNOW_USER,
+    password: SNOW_PASS,
+  },
+});
+
 export default {
   name: "Form",
   data() {
@@ -274,7 +274,7 @@ export default {
         mac_address: this.form.mac.mac,
         cmdb_ci: result.sys_id,
       };
-      this.instance.post("cmdb_ci_network_adapter", net).then((res) => {
+      instance.post("cmdb_ci_network_adapter", net).then((res) => {
         this.$notify({
           group: "foo",
           title: "Sucessfully Added Network Card ",
@@ -287,7 +287,7 @@ export default {
     },
     // Update Existing Itam
     updateExistingItam(data, info) {
-      this.instance
+      instance
         .put(`cmdb_ci_computer/${data[0].sys_id}`, info)
         .then((res) => {
           let result = res.data.result;
@@ -308,7 +308,7 @@ export default {
     },
     // WORK IN PROGRESS - TO CHECK IF NAME EXISTS BEFORE POST
     async checkIfItamExists(info) {
-      await this.instance
+      await instance
         .get(
           `cmdb_ci_computer?sysparm_query=GOTOname%3D${encodeURIComponent(
             info.name
@@ -336,7 +336,7 @@ export default {
         });
     },
     checkIfNetworkCardExists(result) {
-      this.instance
+      instance
         .get(
           `cmdb_ci_network_adapter?sysparm_query=cmdb_ci%3D${
             result.sys_id
@@ -356,7 +356,7 @@ export default {
     },
     // Post the object with the correct fields to create the itam record
     postToSnow(info) {
-      this.instance
+      instance
         .post("cmdb_ci_computer", info)
         .then((res) => {
           console.log(res);
@@ -391,7 +391,7 @@ export default {
         ? (info.manufacturer = "Hewlett-Packard")
         : info;
       // Gets Manufacturer ID
-      await this.instance
+      await instance
         .get(
           `core_company?sysparm_query=nameLIKE${encodeURIComponent(
             info.manufacturer
@@ -419,7 +419,7 @@ export default {
         });
 
       // Gets MODEL ID,  nameLIKE , Name Contains
-      await this.instance
+      await instance
         .get(
           `cmdb_model?sysparm_query=nameLIKE${encodeURIComponent(
             info.model_id

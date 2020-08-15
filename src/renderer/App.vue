@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="auth.authenticated">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="breadcrumb fixed">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" :class="(active = true)">
@@ -22,18 +22,21 @@
     </nav>
     <router-view></router-view>
   </div>
+  <div v-else>
+    <div class="container p-2">
+      <h1 style="text-align:center">Please Log In First</h1>
+      <button class="btn btn-block btn-primary" @click="LogIn()">Login</button>
+    </div>
+  </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
-const { ipcRenderer } = require("electron");
 
 export default {
   name: "app",
   data() {
-    return {
-      accessToken: null,
-    };
+    return {};
   },
   created() {},
   computed: mapState(["auth"]),

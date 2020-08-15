@@ -15,22 +15,28 @@ const instance = axios.create({
 });
 
 const state = {
-  main: 0,
+  requests: [],
 };
 
 const mutations = {
-  DECREMENT_MAIN_COUNTER(state) {
-    state.main--;
-  },
-  INCREMENT_MAIN_COUNTER(state) {
-    state.main++;
+  UPDATE_REQUESTS(state, payload) {
+    state.requests = payload;
   },
 };
 
 const actions = {
-  someAsyncTask({ commit }) {
-    // do something async
-    commit("INCREMENT_MAIN_COUNTER");
+  getRequest({ commit }) {
+    instance
+      .get(`sc_request?sysparm_limit=1`)
+
+      .then((data) => {
+        let res = data.data.result;
+        // console.log(res);
+        commit("UPDATE_REQUESTS", res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 
@@ -38,5 +44,4 @@ export default {
   state,
   mutations,
   actions,
-  instance,
 };

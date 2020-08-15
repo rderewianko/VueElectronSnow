@@ -10,24 +10,25 @@
       </div>
     </div>
     <div class="row h-100">
-      <Ritm v-for="ritm in getRitms" :key="ritm"></Ritm>
+      <Ritm v-for="ritm in snow.requests" :key="ritm.sys_id"></Ritm>
     </div>
   </div>
 </template>
 
 <script>
 import Ritm from "@/components/Ritm";
-const Axios = require("axios");
+import { mapState, mapActions } from "vuex";
 export default {
-  name: "RitmCaputurer",
+  name: "selectConnectionRequest",
   components: {
     Ritm,
   },
-  computed: {
+  created() {
+    this.$store.dispatch("getRequest");
+  },
+  computed: mapState(["snow"]),
+  methods: {
     getRitms() {
-      Axios.get(
-        "https://dev81248.service-now.com/api/now/table/sc_request.do?sysparm_limit=1"
-      );
       return 5;
     },
   },
@@ -37,4 +38,3 @@ export default {
 <style lang="scss" scoped></style>
 
 
-// https://dev81248.service-now.com/sc_req_item_list.do?sysparm_query=request.requested_for%3Djavascript%3Ags.getUserID()%5Eactive%3Dtrue&sysparm_view=ess

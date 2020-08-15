@@ -4,7 +4,7 @@ const defatulState = () => {
   return {
     token: "",
     user: "",
-    authenticated: false,
+    authenticated: true,
   };
 };
 
@@ -34,8 +34,13 @@ const actions = {
     }
   },
 };
+const getters = {
+  isLoggedIn: (state) => !!state.authenticated,
+  authStatus: (state) => state.authenticated,
+};
 export default {
   state,
   mutations,
   actions,
+  getters,
 };
