@@ -1,9 +1,6 @@
 <template>
   <div>
-    <nav
-      class="navbar navbar-expand-lg navbar-dark bg-dark"
-      aria-label="breadcrumb fixed"
-    >
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="breadcrumb fixed">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" :class="(active = true)">
           <router-link
@@ -11,32 +8,26 @@
             :class="{ active: true }"
             exact
             :to="{ name: 'ritm-capturer' }"
-            >Select Ritm</router-link
-          >
+          >Select Ritm</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" :to="{ name: 'form-page' }"
-            >Fill Form</router-link
-          >
+          <router-link class="nav-link" :to="{ name: 'form-page' }">Fill Form</router-link>
         </li>
       </ul>
 
       <div>
-        <button v-if="authenticated" class="btn btn-danger" @click="logOff()">
-          Logoff
-        </button>
-        <button v-else class="btn btn-primary" @click="login()">
-          Login
-        </button>
+        <button v-if="authenticated" class="btn btn-danger" @click="logOff()">Logoff</button>
+        <button v-else class="btn btn-primary" @click="login()">Login</button>
       </div>
     </nav>
     <router-view></router-view>
+    <button @click="increment">TEST</button>
   </div>
 </template>
 
 <script>
-const { ipcRenderer } = require("electron");
 import { mapState, mapActions } from "vuex";
+const { ipcRenderer } = require("electron");
 
 export default {
   name: "app",
@@ -66,6 +57,10 @@ export default {
         this.accessToken = accessToken;
         this.authenticated = true;
       }
+    },
+    increment() {
+      console.log("clicked");
+      this.$store.dispatch("someAsyncTask");
     },
   },
 };

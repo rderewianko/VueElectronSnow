@@ -1,26 +1,26 @@
-import Vue from "vue";
-import axios from "axios";
+import Vue from 'vue'
+import axios from 'axios'
 
-import App from "./App";
-import router from "./router";
-import store from "./store";
+import App from './App'
+import router from './router'
+import store from './store'
 
-import Notifications from "vue-notification";
+import Notifications from 'vue-notification'
 
-Vue.use(Notifications);
+Vue.use(Notifications)
 
-if (!process.env.IS_WEB) Vue.use(require("vue-electron"));
+if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 
-Vue.http = Vue.prototype.$http = axios;
+Vue.http = Vue.prototype.$http = axios
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
   components: { App },
   router,
   store,
-  template: "<App/>",
-}).$mount("#app");
+  template: '<App/>'
+}).$mount('#app')
 
-console.log(window.location);
+console.log(window.location)

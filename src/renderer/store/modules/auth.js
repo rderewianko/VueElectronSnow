@@ -1,24 +1,24 @@
-const { ipcRenderer } = require("electron");
+const { ipcRenderer } = require('electron')
 
 const state = {
-  token: "",
-  user: "",
-};
+  token: '',
+  user: ''
+}
 
 const mutations = {
-  SET_USER(state, payload) {
-    state.user = payload;
-  },
-};
+  SET_USER (state, payload) {
+    state.user = payload
+  }
+}
 
 const actions = {
-  login({ commit }) {
-    let token = ipcRenderer.sendSync("loginPrompt", {});
-    commit("SET_USER", token);
-  },
-};
+  login ({ commit }) {
+    let token = ipcRenderer.sendSync('loginPrompt', {})
+    commit('SET_USER', token)
+  }
+}
 export default {
   state,
   mutations,
-  actions,
-};
+  actions
+}

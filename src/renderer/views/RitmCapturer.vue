@@ -16,22 +16,22 @@
 </template>
 
 <script>
-const Axios = require("axios");
-import Ritm from "@/components/Ritm";
+import Ritm from '@/components/Ritm'
+const Axios = require('axios')
 export default {
-  name: "RitmCaputurer",
+  name: 'RitmCaputurer',
   components: {
-    Ritm,
+    Ritm
   },
   computed: {
-    getRitms() {
+    getRitms () {
       // Axios.get(
       //   "https://dev81248.service-now.com/api/now/table/sc_req_item?sysparm_limit=1"
       // );
-      return 5;
-    },
-  },
-};
+      return 5
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped></style>

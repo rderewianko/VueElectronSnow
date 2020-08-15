@@ -1,10 +1,10 @@
-"use strict";
+// Main App JS (That sends info the rendere process)
+import "./app.js";
+("use strict");
 const { app, BrowserWindow, ipcMain, session } = require("electron");
 const settings = require("./settings.json");
 const path = require("path");
 const url = require("url");
-// Main App JS (That sends info the rendere process)
-import "./app.js";
 let mainWindow;
 
 /**
@@ -60,7 +60,7 @@ ipcMain.on("loginPrompt", (event, args) => {
     modal: false,
     autoHideMenuBar: true,
     parent: mainWindow,
-    frame: true,
+    frame: false,
     show: false,
     webPreferences: {
       nodeIntegration: false, // again, don't need to specify these if Electron v4+ but showing for demo
@@ -81,7 +81,7 @@ ipcMain.on("loginPrompt", (event, args) => {
   });
 
   authWindow.loadURL(
-    `https://login.microsoftonline.com/` +
+    "https://login.microsoftonline.com/" +
       settings.tenantID +
       `/oauth2/authorize?
     client_id=` +
@@ -113,7 +113,7 @@ ipcMain.on("logOut", (event, args) => {
     modal: false,
     autoHideMenuBar: true,
     parent: mainWindow,
-    frame: true,
+    frame: false,
     show: false,
     webPreferences: {
       nodeIntegration: false, // again, don't need to specify these if Electron v4+ but showing for demo
@@ -134,9 +134,9 @@ ipcMain.on("logOut", (event, args) => {
   });
 
   authWindow.loadURL(
-    `https://login.microsoftonline.com/` +
+    "https://login.microsoftonline.com/" +
       settings.tenantID +
-      `/oauth2/v2.0/logout?post_logout_redirect_uri=` +
+      "/oauth2/v2.0/logout?post_logout_redirect_uri=" +
       settings.redirectURL
   );
 
