@@ -1,24 +1,41 @@
-const { ipcRenderer } = require('electron')
+const { ipcRenderer } = require("electron");
 
-const state = {
-  token: '',
-  user: ''
-}
+const defatulState = () => {
+  return {
+    token: "",
+    user: "",
+    authenticated: false,
+  };
+};
+
+const state = defatulState();
 
 const mutations = {
-  SET_USER (state, payload) {
-    state.user = payload
-  }
-}
+  RESET_STATE(state) {
+    state.token = null;
+    state.user = null;
+    state.authenticated = false;
+  },
+  SET_USER(state, payload) {
+    state.token = payload;
+    state.authenticated = true;
+  },
+};
 
 const actions = {
-  login ({ commit }) {
-    let token = ipcRenderer.sendSync('loginPrompt', {})
-    commit('SET_USER', token)
-  }
-}
+  LogIn({ commit }) {
+    let token = ipcRenderer.sendSync("loginPrompt", {});
+    commit("SET_USER", token);
+  },
+  logoff({ commit }) {
+    let off = ipcRenderer.sendSync("logOut", {});
+    if (off !== undefined) {
+      commit("RESET_STATE");
+    }
+  },
+};
 export default {
   state,
   mutations,
-  actions
-}
+  actions,
+};

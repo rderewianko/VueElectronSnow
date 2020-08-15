@@ -16,12 +16,11 @@
       </ul>
 
       <div>
-        <button v-if="authenticated" class="btn btn-danger" @click="logOff()">Logoff</button>
-        <button v-else class="btn btn-primary" @click="login()">Login</button>
+        <button v-if="auth.authenticated" class="btn btn-danger" @click="logOff()">Logoff</button>
+        <button v-else class="btn btn-primary" @click="LogIn()">Login</button>
       </div>
     </nav>
     <router-view></router-view>
-    <button @click="increment">TEST</button>
   </div>
 </template>
 
@@ -33,34 +32,17 @@ export default {
   name: "app",
   data() {
     return {
-      authenticated: false,
       accessToken: null,
     };
   },
-  created() {
-    let accessToken = ipcRenderer.sendSync("loginPrompt", {});
-    if (accessToken !== undefined) {
-      this.accessToken = accessToken;
-      this.authenticated = true;
-    }
-  },
+  created() {},
+  computed: mapState(["auth"]),
   methods: {
     logOff() {
-      let off = ipcRenderer.sendSync("logOut", {});
-      if (off !== undefined) {
-        this.authenticated = false;
-      }
+      this.$store.dispatch("logoff");
     },
-    logIn() {
-      let accessToken = ipcRenderer.sendSync("loginPrompt", {});
-      if (accessToken !== undefined) {
-        this.accessToken = accessToken;
-        this.authenticated = true;
-      }
-    },
-    increment() {
-      console.log("clicked");
-      this.$store.dispatch("someAsyncTask");
+    LogIn() {
+      this.$store.dispatch("LogIn");
     },
   },
 };
