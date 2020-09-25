@@ -155,7 +155,8 @@ const { ipcRenderer } = require("electron");
 const axios = require("axios");
 
 // SNOW CREDS
-const BASE_URL = "https://dev81248.service-now.com/api/now/table/";
+const BASE_URL = "https://dev70134.service-now.com/api/now/table/";
+// const BASE_URL = process.env.ELECTRON_WEBPACK_APP_SNOW_API;
 const SNOW_USER = "Stevec";
 const SNOW_PASS = "Console.L0g";
 
