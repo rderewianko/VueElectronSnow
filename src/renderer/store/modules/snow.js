@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 // SNOW CREDS
-const BASE_URL = "https://dev81248.service-now.com/api/now/table/";
+const BASE_URL = "https://dev70134.service-now.com/api/now/table/";
 const SNOW_USER = "Stevec";
 const SNOW_PASS = "Console.L0g";
 
@@ -27,11 +27,9 @@ const mutations = {
 const actions = {
   getRequest({ commit }) {
     instance
-      .get(`sc_request?sysparm_limit=1`)
-
+      .get(`sc_req_item`)
       .then((data) => {
         let res = data.data.result;
-        // console.log(res);
         commit("UPDATE_REQUESTS", res);
       })
       .catch((err) => {

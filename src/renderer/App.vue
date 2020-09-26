@@ -1,6 +1,9 @@
 <template>
   <div v-if="auth.authenticated">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="breadcrumb fixed">
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-dark"
+      aria-label="breadcrumb fixed"
+    >
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" :class="(active = true)">
           <router-link
@@ -8,15 +11,24 @@
             :class="{ active: true }"
             exact
             :to="{ name: 'ritm-capturer' }"
-          >Select Ritm</router-link>
+            >Select Ritm</router-link
+          >
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" :to="{ name: 'form-page' }">Fill Form</router-link>
+          <router-link class="nav-link" :to="{ name: 'form-page' }"
+            >Fill Form</router-link
+          >
         </li>
       </ul>
 
       <div>
-        <button v-if="auth.authenticated" class="btn btn-danger" @click="logOff()">Logoff</button>
+        <button
+          v-if="auth.authenticated"
+          class="btn btn-danger"
+          @click="logOff()"
+        >
+          Logoff
+        </button>
         <button v-else class="btn btn-primary" @click="LogIn()">Login</button>
       </div>
     </nav>
@@ -24,8 +36,10 @@
   </div>
   <div v-else>
     <div class="container p-2">
-      <h1 style="text-align:center">Please Log In First</h1>
-      <button class="btn btn-block btn-primary" @click="LogIn()">Login</button>
+      <h1 style="text-align: center">Automatic ITAM Creator</h1>
+
+      <h2></h2>
+      <button class="btn btn-small btn-primary" @click="LogIn()">Login</button>
     </div>
   </div>
 </template>

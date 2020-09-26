@@ -4,7 +4,7 @@ const defatulState = () => {
   return {
     token: "",
     user: "",
-    authenticated: true,
+    authenticated: false,
   };
 };
 
