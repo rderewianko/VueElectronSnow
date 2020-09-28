@@ -25,8 +25,8 @@
 
 <script>
 export default {
-  name: "welcome",
-};
+  name: 'welcome'
+}
 </script>
 
 <style lang="scss" scoped>

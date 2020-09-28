@@ -45,24 +45,24 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: "app",
-  data() {
-    return {};
+  name: 'app',
+  data () {
+    return {}
   },
-  created() {},
-  computed: mapState(["auth"]),
+  created () {},
+  computed: mapState(['auth']),
   methods: {
-    logOff() {
-      this.$store.dispatch("logoff");
+    logOff () {
+      this.$store.dispatch('logoff')
     },
-    LogIn() {
-      this.$store.dispatch("LogIn");
-    },
-  },
-};
+    LogIn () {
+      this.$store.dispatch('LogIn')
+    }
+  }
+}
 </script>
 
 <style>

@@ -12,17 +12,17 @@
 
 <script>
 export default {
-  name: "Ritm",
+  name: 'Ritm',
   props: {
     ritm: {
       number: Number,
-      opened_at: String,
-    },
+      opened_at: String
+    }
   },
-  data() {
-    return {};
-  },
-};
+  data () {
+    return {}
+  }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -1,8 +1,8 @@
 version: 0.0.1
 files:
   - url: automatic-itam-creator-setup-0.0.1.exe
-    sha512: yyYnK/DkhJHCg1z9+Y+szvwlcHza6J/K7j+2x8Cg4l5ultbKDNLNaga5oHCWGhNg/2Oh/V3oXX8GPF6CBRriUA==
-    size: 37829099
+    sha512: M0CxeiELIeOzlDPfeCcGSo5RT7K3Id1H0d5PViwr0cTe7Wj/SdFclkcdaJHwTxmka4XPNQ8XNYY42Sn9p9FIrA==
+    size: 37823276
 path: automatic-itam-creator-setup-0.0.1.exe
-sha512: yyYnK/DkhJHCg1z9+Y+szvwlcHza6J/K7j+2x8Cg4l5ultbKDNLNaga5oHCWGhNg/2Oh/V3oXX8GPF6CBRriUA==
-releaseDate: '2020-09-25T22:36:48.356Z'
+sha512: M0CxeiELIeOzlDPfeCcGSo5RT7K3Id1H0d5PViwr0cTe7Wj/SdFclkcdaJHwTxmka4XPNQ8XNYY42Sn9p9FIrA==
+releaseDate: '2020-09-28T16:38:41.316Z'

@@ -24,19 +24,19 @@
 </template>
 
 <script>
-import Ritm from "@/components/Ritm";
-import { mapState, mapActions } from "vuex";
+import Ritm from '@/components/Ritm'
+import { mapState, mapActions } from 'vuex'
 export default {
-  name: "selectConnectionRequest",
+  name: 'selectConnectionRequest',
   components: {
-    Ritm,
+    Ritm
   },
-  created() {
-    this.$store.dispatch("getRequest");
+  created () {
+    this.$store.dispatch('getRequest')
     // this.getRitms();
   },
-  computed: mapState(["snow"]),
-};
+  computed: mapState(['snow'])
+}
 </script>
 
 <style lang="scss" scoped></style>

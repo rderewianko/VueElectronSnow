@@ -1,46 +1,46 @@
-const { ipcRenderer } = require("electron");
+const { ipcRenderer } = require('electron')
 
 const defatulState = () => {
   return {
-    token: "",
-    user: "",
-    authenticated: false,
-  };
-};
+    token: '',
+    user: '',
+    authenticated: false
+  }
+}
 
-const state = defatulState();
+const state = defatulState()
 
 const mutations = {
-  RESET_STATE(state) {
-    state.token = null;
-    state.user = null;
-    state.authenticated = false;
+  RESET_STATE (state) {
+    state.token = null
+    state.user = null
+    state.authenticated = false
   },
-  SET_USER(state, payload) {
-    state.token = payload;
-    state.authenticated = true;
-  },
-};
+  SET_USER (state, payload) {
+    state.token = payload
+    state.authenticated = true
+  }
+}
 
 const actions = {
-  LogIn({ commit }) {
-    let token = ipcRenderer.sendSync("loginPrompt", {});
-    commit("SET_USER", token);
+  LogIn ({ commit }) {
+    let token = ipcRenderer.sendSync('loginPrompt', {})
+    commit('SET_USER', token)
   },
-  logoff({ commit }) {
-    let off = ipcRenderer.sendSync("logOut", {});
+  logoff ({ commit }) {
+    let off = ipcRenderer.sendSync('logOut', {})
     if (off !== undefined) {
-      commit("RESET_STATE");
+      commit('RESET_STATE')
     }
-  },
-};
+  }
+}
 const getters = {
   isLoggedIn: (state) => !!state.authenticated,
-  authStatus: (state) => state.authenticated,
-};
+  authStatus: (state) => state.authenticated
+}
 export default {
   state,
   mutations,
   actions,
-  getters,
-};
+  getters
+}
